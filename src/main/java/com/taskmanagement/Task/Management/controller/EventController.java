@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.taskmanagement.Task.Management.model.Event;
 import com.taskmanagement.Task.Management.service.EventService;
 
-@CrossOrigin(origins = "http://localhost:3000/")
+@CrossOrigin(origins = "https://task-management-backend-148x.onrender.com/")
 @RestController
 @RequestMapping("/api/v1/")
 public class EventController {
