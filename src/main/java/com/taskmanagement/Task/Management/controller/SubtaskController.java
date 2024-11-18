@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.taskmanagement.Task.Management.model.Subtask;
 import com.taskmanagement.Task.Management.service.SubtaskService;
 
-@CrossOrigin(origins = "http://localhost:3000/")
+// @CrossOrigin(origins = "http://localhost:3000/")
+@CrossOrigin(origins = "https://task-management-frontend-y3lr.vercel.app/")
 @RestController
 @RequestMapping("/api/v1/")
 public class SubtaskController {

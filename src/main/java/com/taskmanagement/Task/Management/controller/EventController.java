@@ -18,6 +18,7 @@ import com.taskmanagement.Task.Management.model.Event;
 import com.taskmanagement.Task.Management.service.EventService;
 
 @CrossOrigin(origins = "https://task-management-frontend-y3lr.vercel.app/")
+// @CrossOrigin(origins = "http://localhost:3000/")
 @RestController
 @RequestMapping("/api/v1/")
 public class EventController {
