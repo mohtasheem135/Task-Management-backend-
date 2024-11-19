@@ -14,11 +14,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.taskmanagement.Task.Management.dto.EventDTO;
 import com.taskmanagement.Task.Management.model.Event;
 import com.taskmanagement.Task.Management.service.EventService;
 
-@CrossOrigin(origins = "https://task-management-frontend-y3lr.vercel.app/")
-// @CrossOrigin(origins = "http://localhost:3000/")
+ @CrossOrigin(origins = "https://task-management-frontend-y3lr.vercel.app/")
+//@CrossOrigin(origins = "http://localhost:3000/")
 @RestController
 @RequestMapping("/api/v1/")
 public class EventController {
@@ -27,20 +28,22 @@ public class EventController {
 	private EventService eventService;
 	
 	@GetMapping("/events")
-	public List<Event> getAllEvents() {
-		return eventService.getAllEvents();
-	}
+	public ResponseEntity<List<EventDTO>> getAllEvents() {
+        return ResponseEntity.ok(eventService.getAllEvents());
+    }
 	
 	@PostMapping("/events")
-	public ResponseEntity<Event> createEvent(@RequestBody Event event) {
-        Event createdEvent = eventService.createEvent(event);
-        return new ResponseEntity<>(createdEvent, HttpStatus.CREATED);
+	public ResponseEntity<EventDTO> createEvent(@RequestBody EventDTO eventDTO) {
+        return ResponseEntity.ok(eventService.createEvent(eventDTO));
     }
 	
 	@PutMapping("/events/{eventId}")
-    public ResponseEntity<Event> updateEvent(@PathVariable Long eventId, @RequestBody Event event) {
-        Event updatedEvent = eventService.updateEvent(eventId, event);
-        return new ResponseEntity<>(updatedEvent, HttpStatus.OK);
+//    public ResponseEntity<Event> updateEvent(@PathVariable Long eventId, @RequestBody Event event) {
+//        Event updatedEvent = eventService.updateEvent(eventId, event);
+//        return new ResponseEntity<>(updatedEvent, HttpStatus.OK);
+//    }
+	public ResponseEntity<EventDTO> updateEvent(@PathVariable Long eventId, @RequestBody EventDTO eventDTO) {
+        return ResponseEntity.ok(eventService.updateEvent(eventId, eventDTO));
     }
 	
 }

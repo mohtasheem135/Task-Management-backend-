@@ -20,23 +20,24 @@ public class Event {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@Column(name = "event_name")
-	private String eventName;
+	@Column(name = "name")
+	private String name;
 
-	@Column(name = "createdAt")
+	@Column(name = "created_at", nullable = false)
 	private LocalDateTime createdAt;
 
-	@Column(name = "isActive")
+	@Column(name = "updated_at")
+	private LocalDateTime updatedAt;
+	
+	@Column(name = "is_active", nullable = false)
 	private Boolean isActive;
 	
 	@Column(name = "description")
 	private String description;
 
-	@Column(name = "updatedAt")
-	private LocalDateTime updatedAt;
 	
 	@OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Subtask> subtasks;
+	private List<Task> tasks;
 	
 	//empty constructor
 	public Event() {
@@ -44,13 +45,13 @@ public class Event {
 	}
 
 	//constructor
-	public Event(String eventName, LocalDateTime createdAt,LocalDateTime updatedAt, Boolean isActive, String description, List<Subtask> subtasks) {
+	public Event(String name, LocalDateTime createdAt,LocalDateTime updatedAt, Boolean isActive, String description, List<Task> tasks) {
 		super();
-		this.eventName = eventName;
+		this.name = name;
 		this.createdAt = createdAt != null ? createdAt : LocalDateTime.now();
 		this.isActive = isActive;
 		this.description = description;
-		this.subtasks = subtasks;
+		this.tasks = tasks;
 		this.updatedAt = LocalDateTime.now();
 	}
 
@@ -63,13 +64,13 @@ public class Event {
 		this.id = id;
 	}
 	
-	public String getEventName() {
-		return eventName;
+	public String getName() {
+		return name;
 	}
 	
 
-	public void setEventName(String eventName) {
-		this.eventName = eventName;
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	public String getDescription() {
@@ -104,12 +105,12 @@ public class Event {
 		this.isActive = isActive;
 	}
 	
-	public List<Subtask> getSubtasks() {
-		return subtasks;
+	public List<Task> getTasks() {
+		return tasks;
 	}
 	
-	public void setSubtasks(List<Subtask> subtasks) {
-		this.subtasks = subtasks;
+	public void setTasks(List<Task> tasks) {
+		this.tasks = tasks;
 	}
 	
 }

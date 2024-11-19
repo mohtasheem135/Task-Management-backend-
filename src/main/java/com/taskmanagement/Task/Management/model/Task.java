@@ -8,6 +8,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -16,37 +17,39 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "subtasks")
-public class Subtask {
+@Table(name = "tasks")
+public class Task {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@Column(name = "subtask_name")
-	private String subtaskName;
+	@Column(name = "name", nullable = false)
+	private String name;
 
-	@Column(name = "createdAt")
+	@Column(name = "created_at", nullable = false)
 	private LocalDateTime createdAt;
 
-	@Column(name = "updatedAt")
+	@Column(name = "updated_at")
 	private LocalDateTime updatedAt;
 
 	@Column(name = "description")
 	private String description;
 
-	@Column(name = "expectedCompletionTime")
+	@Column(name = "expected_completion_time")
 	private LocalDateTime expectedCompletionTime;
 
 	@Enumerated(EnumType.STRING)
+	@Column(name = "priority", nullable = false)
 	private Priority priority;
 
 	@Enumerated(EnumType.STRING)
-	private Status taskStatus;
+	@Column(name = "task_status", nullable = false)
+	private Status status;
 
-	@ManyToOne
-	@JoinColumn(name = "event_id")
-	@JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "event_id", nullable = false)
+//	@JsonIgnore
 	private Event event;
 
 	// Enum for priority levels
@@ -60,24 +63,23 @@ public class Subtask {
 	}
 
 	// empty constructor
-	public Subtask() {
+	public Task() {
 
 	}
 
 	// constructor
-	public Subtask(long id, String subtaskName, LocalDateTime createdAt, LocalDateTime updatedAt, String description,
-			LocalDateTime expectedCompletionTime, Priority priority, Status taskStatus, Event event) {
+	public Task(long id, String name, LocalDateTime createdAt, LocalDateTime updatedAt, String description,
+			LocalDateTime expectedCompletionTime, Priority priority, Status status, Event event) {
 		super();
 		this.id = id;
-		this.subtaskName = subtaskName;
+		this.name = name;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
 		this.description = description;
 		this.expectedCompletionTime = expectedCompletionTime;
 		this.priority = priority;
-		this.taskStatus = taskStatus;
+		this.status = status;
 		this.event = event;
-
 	}
 
 	// Getters & Setters
@@ -89,12 +91,12 @@ public class Subtask {
 		this.id = id;
 	}
 
-	public String getSubtaskName() {
-		return subtaskName;
+	public String getName() {
+		return name;
 	}
 
-	public void setSubtaskName(String subtaskName) {
-		this.subtaskName = subtaskName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public LocalDateTime getCreatedAt() {
@@ -137,12 +139,12 @@ public class Subtask {
 		this.priority = priority;
 	}
 
-	public Status getTaskStatus() {
-		return taskStatus;
+	public Status getStatus() {
+		return status;
 	}
 
-	public void setTaskStatus(Status taskStatus) {
-		this.taskStatus = taskStatus;
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 
 	public Event getEvent() {
@@ -153,15 +155,15 @@ public class Subtask {
 		this.event = event;
 	}
 
-	public void updateSubtask(String newSubtaskName, String newDescription, Status newStatus, LocalDateTime newDueTime,
-			Priority newPriority) {
-		this.subtaskName = newSubtaskName != null ? newSubtaskName : this.subtaskName;
-		this.description = newDescription != null ? newDescription : this.description;
-		this.taskStatus = newStatus != null ? newStatus : this.taskStatus;
-		this.expectedCompletionTime = newDueTime.isAfter(LocalDateTime.now()) ? newDueTime
-				: this.expectedCompletionTime; // Ensure dueTime is still in the future
-		this.priority = newPriority != null ? newPriority : this.priority;
-		this.updatedAt = LocalDateTime.now(); // Automatically update the `updatedAt` field
-	}
+//	public void updateSubtask(String newName, String newDescription, Status newStatus, LocalDateTime newDueTime,
+//			Priority newPriority) {
+//		this.name = newName != null ? newName : this.name;
+//		this.description = newDescription != null ? newDescription : this.description;
+//		this.taskStatus = newStatus != null ? newStatus : this.taskStatus;
+//		this.expectedCompletionTime = newDueTime.isAfter(LocalDateTime.now()) ? newDueTime
+//				: this.expectedCompletionTime; // Ensure dueTime is still in the future
+//		this.priority = newPriority != null ? newPriority : this.priority;
+//		this.updatedAt = LocalDateTime.now(); // Automatically update the `updatedAt` field
+//	}
 
 }
